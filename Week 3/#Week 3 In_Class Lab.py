@@ -9,7 +9,7 @@
 import csv
 
 #--FUNCTIONS-------------------------------------
-  
+
 
 #--Main Executing Code---------------------------
 
@@ -77,7 +77,7 @@ with open("Week 3/filehandling-1.csv") as csvfile:
 
 print(f"\n")
 print(f"To replace {deskNum:2} desktops, it would cost ${deskCost:.2f}")
-print(f"To replace {lapNum:2} desktops, it would cost ${lapCost:.2f}")
+print(f"To replace {lapNum:2} labtops, it would cost ${lapCost:.2f}")
 print(f"\n{"Type":7} \t {"Brand":7} \t {"CPU":5} \t {"RAM":5} \t {"1st Disk":7} \t {"NO HDD":7} \t {"2nd Disk":8} \t {"OS":5} \t {"YR":5}")
 print("-----------------------------------------------------------------------------------------------------------")
 for i in range(len(types)):

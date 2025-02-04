@@ -90,9 +90,9 @@ print("")# Print ending new line for readability
 file = open('westeros.csv','w') 
 for i in range(0, len(fName)):
     if i != (len(fName)-1):
-        file.write(f"{fName[i]:10}  {lName[i]:10} {emails[i]:28}  {deps[i]:22}  {exts[i]}\n")
+        file.write(f"{fName[i]},{lName[i]},{emails[i]},{deps[i]},{exts[i]}\n")
     else:
-        file.write(f"{fName[i]:10}  {lName[i]:10} {emails[i]:28}  {deps[i]:22}  {exts[i]}")
+        file.write(f"{fName[i]},{lName[i]},{emails[i]},{deps[i]}{exts[i]}")
 file.close()
 
 

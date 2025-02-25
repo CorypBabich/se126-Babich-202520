@@ -23,6 +23,7 @@ playerShip = {
 }
 currentFoe = {} # This is blank on compliation so that the enemy templates can fill it when they join the fight
                 # Funcations and other processes will only referrence the states of currentFoe
+
 # Enemy ship templates
 sloop = {
     "name":"Sloop",
@@ -57,5 +58,6 @@ while contineuY == "Y":
     print(f"Enemy Ship: {currentFoe["name"]} | HitPoints :{currentFoe["HP"]:2} , Attack :{currentFoe["atc"]:2} , Defence :{currentFoe["def"]:2}")
     
     print(f"\n\nYour Ship: {currentFoe["name"]} | HitPoints :{currentFoe["HP"]:2} , Attack :{currentFoe["atc"]:2} , Defence :{currentFoe["def"]:2}")
+    print(f"-\nAttack). ")
     input()
 

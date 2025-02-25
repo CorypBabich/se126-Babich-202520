@@ -16,7 +16,7 @@ def display(x, foundList, records):
     records  =  is the length of the list we are going to process throguh (number of loops/prints)
     '''
 
-    print(f"{'CLASS':8} {'NAMe':10} {'MEANING':20} {'CULTURE'}")
+    print(f"{'CLASS':8} {'NAME':10} {'MEANING':20} {'CULTURE'}")
 
     if x != "x":
         print(f"{class_type[x]:8} {name[x]:10} {meaning[x]:20} {culture[x]}")

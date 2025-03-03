@@ -27,9 +27,10 @@ with open("Week 8 Homework/words.csv") as csvfile:
         diction.update({rec[0]:rec[1]})
 
 while continueY == "Y":
-    print("1. Show all words – Show all words stored to the dictionary")
+    print("\n1. Show all words – Show all words stored to the dictionary")
     print("2. Search for a word – Allow the user to enter a word and if it is in the dictionary, show its definition (tell the user if the word is not in the dictionary)")
-    print("3. Add a word – Allow a user to add a word to the dictionary if it does not already exist\n4. EXIT")
+    print("3. Add a word – Allow a user to add a word to the dictionary if it does not already exist")
+    print("4. Save changes\n5. EXIT")
     userInput = input("-:")
 
     if userInput == "1":
@@ -61,10 +62,36 @@ while continueY == "Y":
         userWord = input("What is the word you would like to add :")
         userDef = input("What is the definition of the added word :")
         diction.update({userWord:userDef})
+    
     elif userInput == "4":
+        print()
+        file = open('Week 8 Homework/words.csv','w') 
+
+        i = 0
+        j = 0
+        for key in diction: 
+            i += 1
+
+        print(i)
+        for key in diction:
+            if j != (i - 1):
+                file.write(f"{key:14},{diction[key]}\n")
+            else: 
+                file.write(f"{key:14},{diction[key]}")
+            j += 1
+        file.close()
+
+        print("Dictionary Saved\n")
+
+    elif userInput == "5":
         continueY = "N"
     else:
         print("***INVALID INPUT***")
 
-print("Goodbye, and have a good day.")
+print("\nGoodbye, and have a good day.\n\n")
+
+
+
+
+
 

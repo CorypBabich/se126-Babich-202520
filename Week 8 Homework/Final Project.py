@@ -8,18 +8,44 @@
 
 #--IMPORTS---------------------------------------
 import csv
+import random
 
 #--FUNCTIONS-------------------------------------
+def enAttack(): 
+    return attack(currentFoe, player)
+def EnDefend():
+    return defend(currentFoe)
 
+def attack(attacker, target):
+    defence = 1
+    if target["isDef"] == True:
+        defence = 2
+    damage = (attacker["atc"] - target["def"])/defence
+    
+    # If the target's armor reduces the incoming damage to a negative number, it is set to 0.
+    if damage < 0:
+        damage = 0
+
+    #Print flavor text for notifying the player, change based on if the player is the attack is or not.
+    if attacker == player:
+        print(f"Hit them with the Ion Cannons. (You deal {damage} damage)")
+    else:
+        print(f"Their launching missils! (You take {damage} damage)")
+
+    target["HP"] -= damage
+
+def defend(defender):
+    defender["isDef"] = True
 
 #--MAIN EXECUTING CODE----------------------------------
 
 # Player stats and enemy in focus
-playerShip = {
-    "Name":"SS No Name",
+player = {
+    "name":"SS No Name",
     "HP":10,
-    "Atc":5,
-    "Def":5
+    "atc":5,
+    "def":5,
+    "isDef":False
 }
 currentFoe = {} # This is blank on compliation so that the enemy templates can fill it when they join the fight
                 # Funcations and other processes will only referrence the states of currentFoe
@@ -29,19 +55,25 @@ sloop = {
     "name":"Sloop",
     "HP":10,
     "atc":2,
-    "def":0
+    "def":0,
+    "isDef":False,
+    "ability":[enAttack,EnDefend]
 }
 battleShip = {
     "name":"Battleship",
     "HP":30,
     "atc":10,
-    "def":2
+    "def":2,
+    "isDef":False,
+    "ability":[enAttack,EnDefend]
 }
 capitalShip = {
     "name":"Capitalship",
     "HP":50,
     "atc":20,
-    "def":4
+    "def":4,
+    "isDef":False,
+    "ability":[enAttack,EnDefend]
 }
 
 # The order in which enemies attack the player
@@ -55,9 +87,20 @@ contineuY = "Y"
 
 currentFoe = sloop
 while contineuY == "Y":
+    userInput = ""
+    player["isDef"] = False
+
+    print("\n")
     print(f"Enemy Ship: {currentFoe["name"]} | HitPoints :{currentFoe["HP"]:2} , Attack :{currentFoe["atc"]:2} , Defence :{currentFoe["def"]:2}")
-    
-    print(f"\n\nYour Ship: {currentFoe["name"]} | HitPoints :{currentFoe["HP"]:2} , Attack :{currentFoe["atc"]:2} , Defence :{currentFoe["def"]:2}")
-    print(f"-\nAttack). ")
-    input()
+    print(f"\nYour Ship: {player["name"]} | HitPoints :{player["HP"]:2} , Attack :{player["atc"]:2} , Defence :{player["def"]:2}")
+    print(f"-\nYour actions) [Attack]  [Defend]  ")
+    userInput = input("-:")
+
+    if userInput.upper() in "ATTACK":
+        attack(player, currentFoe)
+
+    elif userInput.upper() in "DEFENCE":
+        player["isDef"] = True
+
+    currentFoe["ability"][random.randrange(len(currentFoe["ability"]))]()
 

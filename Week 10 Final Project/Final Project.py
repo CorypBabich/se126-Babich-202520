@@ -22,14 +22,21 @@ def enAttack():
     return attack(currentFoe, player)
 def enDefend():
     return defend(currentFoe)
+def enRepair():
+    return repair(currentFoe)
 
 def attack(attacker, target):
-    damage = (attacker["atc"] - target["def"])
+    damage = attacker["atc"]
 
-    if target["isDef"] == True:
+    #reduce damage if the target is defending
+    if target["isDef"] == True and attacker["isAim"] != True:
         damage = damage/2
     
-    
+    #increase damage if the attacker is aiming
+
+
+    damage = damage - target["def"]
+
     # If the target's armor reduces the incoming damage to a negative number, it is set to 0.
     if damage < 0:
         damage = 0
@@ -42,7 +49,6 @@ def attack(attacker, target):
 
     target["HP"] -= damage
 
-
 def defend(defender):
     defender["isDef"] = True
 
@@ -50,6 +56,19 @@ def defend(defender):
         print(f"Take evasive maneuvers!")
     else:
         print(f"They're trying to dodge our cannons")
+
+def repair(repairer):
+    repairNum = (1 + random.randrange(5)) + (1 + random.randrange(5)) # Randomly generates 2 random values ranging from 1 to 6 and adds them together
+    
+    if repairer["HP"] + repairNum > repairer["HPmax"]:
+        repairer["HP"] = repairer["HPmax"]
+    else:
+        repairer["HP"] += repairNum
+
+    if repairer == player:
+        print()
+    else:
+        print()
 
 #--MAIN EXECUTING CODE----------------------------------
 
@@ -104,6 +123,7 @@ battleOrder = [
 
 contineuY = "Y"
 battleNum = 0
+playerAttacking = False
 
 updateEnemy(battleOrder[battleNum]) #Sets the stats of currentFoe to the stats of the first enemy in the battle order list
 while contineuY == "Y":
@@ -117,14 +137,14 @@ while contineuY == "Y":
     userInput = input("-:")
 
     if userInput.upper() in "ATTACK":
-        attack(player, currentFoe)
+        playerAttacking = True
 
     elif userInput.upper() in "DEFENCE":
         player["isDef"] = True
 
     currentFoe["isDef"] = False #if the enemy defended last turn, it is reset after the player's action but before it takes a turn.
     
-    currentFoe["ability"][random.randrange(len(currentFoe["ability"]))]()
+    currentFoe["ability"][random.randrange(len(currentFoe["ability"]))]() #This is the weirdedest line of code I've ever written so below it is a break down. 
     '''
                                                                        () "The rest of the line determines the function location, these parentheses"
     currentfoe["ability"]                                                 "references the ability list, in the currentfoe dictionary"
@@ -145,5 +165,8 @@ while contineuY == "Y":
         battleNum += 1
         updateEnemy(battleOrder[battleNum])
 
-
+    #Attacks are executed 
+    if playerAttacking == True:
+        attack(player, currentFoe)
+        playerAttacking = False
 

@@ -1,13 +1,12 @@
 
 #Cory Babich
-#Lab 6
+#Final Project
 #SE126.06
 #2-18-2025 [W7D2]
 
 #VARIABLE DICTIONARY
 
 #--IMPORTS---------------------------------------
-import csv
 import random
 
 #--FUNCTIONS-------------------------------------
@@ -97,7 +96,9 @@ player = {
     "atc":5,
     "def":5,
     "isDef":False,
-    "isEMP":False
+    "isEMP":False,
+    "hasRepair": False,
+    "hasEMP": False
 }
 currentFoe = {
     "name":"NoFoeShipError",
@@ -149,9 +150,9 @@ battleNum = 0
 chargeNum = 100
 chargeDisplay = "Ready!"
 menuInput = 0
-exitGame = 0
+additionalAbilities = ""
 
-print("\nWelcome to Austin and Cory's Ship!")
+print("\nWelcome to Star Wars: Battle of the Fleets!")
 print("1. Play Game \n2. How to Play \n3. Exit")
 
 while contineuY == "Y":
@@ -159,6 +160,11 @@ while contineuY == "Y":
 
     #If the player enters 1 at the menu, the game starts.
     if menuInput == "1":
+
+        if player["hasRepair"] == True:
+            additionalAbilities += " [Repair] "
+        if player["hasEMP"] == True:
+            additionalAbilities += f" [EMP : {chargeDisplay}] "
 
         updateEnemy(battleOrder[battleNum]) #Sets the stats of currentFoe to the stats of the first enemy in the battle order list
         while contineuY == "Y":
@@ -176,7 +182,7 @@ while contineuY == "Y":
             print("\n")
             print(f"Enemy Ship: {currentFoe["name"]:12} | HitPoints :{currentFoe["HP"]:2} , Attack :{currentFoe["atc"]:2} , Armor :{currentFoe["def"]:2}")
             print(f"Your Ship : {player["name"]:12} | HitPoints :{player["HP"]:2} , Attack :{player["atc"]:2} , Armor :{player["def"]:2}")
-            print(f"-\nYour actions) [Attack]  [Defend]  [Repair]  [EMP : {chargeDisplay}] {"":65} [Exit: Leave game]")
+            print(f"-\nYour actions) [Attack]  [Defend] {additionalAbilities:85} [Exit: Leave game]")
             #Taking the player's requested action
     
 
@@ -200,10 +206,10 @@ while contineuY == "Y":
                     player["isDef"] = True
 
                 #Player repairs their ship to regains hit points.
-                elif userInput.upper() in "REPAIR":
+                elif player["hasRepair"] == True and userInput.upper() in "REPAIR":
                     repair(player)
 
-                elif userInput.upper() in "EMP":
+                elif player["hasEMP"] == True and userInput.upper() in "EMP":
                     if chargeNum >= 100:
                         empAttack(player, currentFoe)
                         print("Player uses EMP Blast")

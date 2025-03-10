@@ -174,8 +174,8 @@ while contineuY == "Y":
                 chargeDisplay == "Ready!"
 
             print("\n")
-            print(f"Enemy Ship: {currentFoe["name"]:12} | HitPoints :{currentFoe["HP"]:2} , Attack :{currentFoe["atc"]:2} , Defence :{currentFoe["def"]:2}")
-            print(f"Your Ship : {player["name"]:12} | HitPoints :{player["HP"]:2} , Attack :{player["atc"]:2} , Defence :{player["def"]:2}")
+            print(f"Enemy Ship: {currentFoe["name"]:12} | HitPoints :{currentFoe["HP"]:2} , Attack :{currentFoe["atc"]:2} , Armor :{currentFoe["def"]:2}")
+            print(f"Your Ship : {player["name"]:12} | HitPoints :{player["HP"]:2} , Attack :{player["atc"]:2} , Armor :{player["def"]:2}")
             print(f"-\nYour actions) [Attack]  [Defend]  [Repair]  [EMP : {chargeDisplay}] {"":65} [Exit: Leave game]")
             #Taking the player's requested action
     
@@ -224,7 +224,7 @@ while contineuY == "Y":
             currentFoe["isDef"] = False #if the enemy defended last turn, it is reset after the player's action but before it takes a turn.
     
             if currentFoe["isEMP"] == False: #if the enemy is not under the effects of an EMP they take their turn.
-                currentFoe["ability"][random.randrange(len(currentFoe["ability"]))]() #This is the weirdedest line of code I've ever written so below it is a break down. 
+                currentFoe["ability"][random.randrange(len(currentFoe["ability"]))]() #This is the weirdedest line of code I've ever written, so below it is a break down. 
                 '''
                                                                                    () "The rest of the line determines the function location, these parentheses"
                 currentfoe["ability"]                                                 "references the ability list, in the currentfoe dictionary"
@@ -249,11 +249,12 @@ while contineuY == "Y":
                 updateEnemy(battleOrder[battleNum])
 
     elif menuInput == "2":
-        print("\nThis game plays as a turn based combat, each turn the player enters in one of the following commands:")
-        print("[Attack]")
-        print("[Defence]")
-        print("[Repair] : Regain hit points &&&&(2d6)")
-        print("[EMP] : The enemy's net turn is skipped")
+        print("\nThis game plays as a turn based combat, each turn the player enters in one of the following commands:\n")
+        print("[Attack]  : Deal damage to the enemy equal to your Attack value minus their Armor value")
+        print("[Defence] : Reduce the damage dealt by enemy's next attack by half")
+        print("[Repair]  : Regain 2 to 12 hit points")
+        print("[EMP]     : The enemy's net turn is skipped")
+        print("")
 
     elif menuInput == "3": #Player leaves the game, set ContineuY to any value that is not "Y" to end the loop.
         contineuY = "N"
